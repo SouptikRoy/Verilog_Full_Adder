@@ -85,10 +85,5 @@ module full_adder_behavioral (
 endmodule
 
 
-## 🧪 Testbench Code
-
-
-
-
-
+---
 
