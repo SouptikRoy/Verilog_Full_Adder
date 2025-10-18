@@ -60,3 +60,35 @@ module full_adder_gate (
   and (w3, A, B);
   or  (Cout, w2, w3);
 endmodule
+
+----
+
+🧩 2. Dataflow Modeling
+
+module full_adder_dataflow (
+  input A, B, Cin,
+  output Sum, Cout
+);
+  assign Sum  = A ^ B ^ Cin;
+  assign Cout = (A & B) | (B & Cin) | (A & Cin);
+endmodule
+
+
+🧩 3. Behavioral Modeling
+module full_adder_behavioral (
+  input A, B, Cin,
+  output reg Sum, Cout
+);
+  always @(*) begin
+    {Cout, Sum} = A + B + Cin;
+  end
+endmodule
+
+
+## 🧪 Testbench Code
+
+
+
+
+
+
