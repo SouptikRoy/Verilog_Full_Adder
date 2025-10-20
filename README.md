@@ -125,6 +125,12 @@ endmodule
 
 ## 🖼️ Simulation Results
 
+
+### 🔸 RTL Capture
+
+![Output Capture](Capture.PNG)
+
+
 ### 🔸 RTL Schematic
 
 ![RTL Schematic](FA_RTL_SCh2.PNG)
@@ -133,9 +139,6 @@ endmodule
 
 ![Waveform](Waveform.PNG)
 
-### 🔸 Output Capture
-
-![Output Capture](Capture.PNG)
 
 ---
 
