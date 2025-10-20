@@ -127,7 +127,7 @@ endmodule
 
 ### 🔸 RTL Schematic
 
-![RTL Schematic](E:\MY FOLDER\VLSI_Projects\FUll_Adder\FA_RTL_SCh2.PNG)
+![RTL Schematic](FA_RTL_SCh2.PNG)
 
 ### 🔸 Simulation Waveform
 
