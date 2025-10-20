@@ -85,7 +85,9 @@ module full_adder_behavioral (
 endmodule
 
 ---
-
+<p align="center">
+  <img src="E:\MY FOLDER\VLSI_Projects\FUll_Adder\Capture.PNG" alt="Simulation Output" width="500"/>
+</p>
 
 
 
