@@ -1,51 +1,38 @@
-## Verilog_Full_Adder
-Project Overview  This project implements a 1-bit Full Adder circuit using Verilog HDL, which performs binary addition of three input bits — two significant bits (A, B) and a carry-in (Cin) — to produce a sum (S) and a carry-out (Cout). The Full Adder is a core building block of digital arithmetic circuits such as adders, ALUs, and CPUs.
-# ⚙️ Verilog_Full_Adder
+# ⚙️ Verilog Full Adder
 
-### 🧩 Project Overview  
-This project implements a **1-bit Full Adder** using **Verilog HDL**.  
-A Full Adder is a fundamental **combinational logic circuit** that performs the addition of three binary inputs: two significant bits (**A**, **B**) and a **carry-in (Cin)**. It produces a **Sum (S)** and a **Carry-out (Cout)**.  
-
-Full Adders are essential in **ALUs, processors, and digital systems**, serving as the basic unit for multi-bit addition and arithmetic operations.
+This project demonstrates the **implementation of a 1-bit Full Adder** using **three Verilog modeling styles**: Gate-level, Dataflow, and Behavioral. It also includes corresponding **testbenches** to verify the correctness of each model.
 
 ---
 
-## 🎯 Objectives
-- Design and simulate a **1-bit Full Adder** in Verilog  
-- Demonstrate **gate-level**, **dataflow**, and **behavioral modeling** styles  
-- Develop a **testbench** to verify the correctness of the design  
-- Observe the **waveform outputs** and verify truth table behavior  
+## 📘 Project Overview
 
----
+A **Full Adder** is a fundamental combinational circuit that adds three one-bit binary numbers — `A`, `B`, and `Cin` — and outputs a **Sum** and **Carry (Cout)**.
 
-## 🧠 Theoretical Background
+### ➕ Boolean Equations
 
-A Full Adder adds three input bits: **A**, **B**, and **Cin**.
+```
+Sum  = A ⊕ B ⊕ Cin
+Cout = (A & B) | (B & Cin) | (A & Cin)
+```
 
-\[
-\text{Sum} = A \oplus B \oplus C_{in}
-\]
-\[
-\text{Carry} = (A \cdot B) + (B \cdot C_{in}) + (A \cdot C_{in})
-\]
+### 📊 Truth Table
 
-| Inputs | Output | |
-|:------:|:-------:|:----:|
 | A | B | Cin | Sum | Cout |
-| 0 | 0 | 0 | 0 | 0 |
-| 0 | 0 | 1 | 1 | 0 |
-| 0 | 1 | 0 | 1 | 0 |
-| 0 | 1 | 1 | 0 | 1 |
-| 1 | 0 | 0 | 1 | 0 |
-| 1 | 0 | 1 | 0 | 1 |
-| 1 | 1 | 0 | 0 | 1 |
-| 1 | 1 | 1 | 1 | 1 |
+| - | - | --- | --- | ---- |
+| 0 | 0 | 0   | 0   | 0    |
+| 0 | 0 | 1   | 1   | 0    |
+| 0 | 1 | 0   | 1   | 0    |
+| 0 | 1 | 1   | 0   | 1    |
+| 1 | 0 | 0   | 1   | 0    |
+| 1 | 0 | 1   | 0   | 1    |
+| 1 | 1 | 0   | 0   | 1    |
+| 1 | 1 | 1   | 1   | 1    |
 
 ---
 
-## 💻 Design Methodology
+## 🧩 Design Methodology
 
-### 🧩 1. Gate-Level Modeling
+### 1️⃣ Gate-Level Modeling
 
 ```verilog
 module full_adder_gate (
@@ -60,11 +47,11 @@ module full_adder_gate (
   and (w3, A, B);
   or  (Cout, w2, w3);
 endmodule
+```
 
-----
+### 2️⃣ Dataflow Modeling
 
-🧩 2. Dataflow Modeling
-
+```verilog
 module full_adder_dataflow (
   input A, B, Cin,
   output Sum, Cout
@@ -72,9 +59,11 @@ module full_adder_dataflow (
   assign Sum  = A ^ B ^ Cin;
   assign Cout = (A & B) | (B & Cin) | (A & Cin);
 endmodule
+```
 
+### 3️⃣ Behavioral Modeling
 
-🧩 3. Behavioral Modeling
+```verilog
 module full_adder_behavioral (
   input A, B, Cin,
   output reg Sum, Cout
@@ -83,14 +72,87 @@ module full_adder_behavioral (
     {Cout, Sum} = A + B + Cin;
   end
 endmodule
+```
 
 ---
 
+## 🧪 Testbench Section
 
+This section contains **testbenches** used to verify the functionality of each Verilog Full Adder design.
 
+### 🔹 Testbench 1 — Dataflow Model Verification
 
+```verilog
+module tb_full_adder_dataflow;
+  reg A, B, Cin;
+  wire Sum, Cout;
 
+  full_adder_dataflow uut (.A(A), .B(B), .Cin(Cin), .Sum(Sum), .Cout(Cout));
+
+  initial begin
+    $display("A B Cin | Sum Cout");
+    $monitor("%b %b  %b  |  %b   %b", A, B, Cin, Sum, Cout);
+    A=0; B=0; Cin=0; #10;
+    A=0; B=1; Cin=0; #10;
+    A=1; B=1; Cin=1; #10;
+    $stop;
+  end
+endmodule
+```
+
+### 🔹 Testbench 2 — Behavioral Model Verification
+
+```verilog
+module tb_full_adder_behavioral;
+  reg A, B, Cin;
+  wire Sum, Cout;
+
+  full_adder_behavioral uut (.A(A), .B(B), .Cin(Cin), .Sum(Sum), .Cout(Cout));
+
+  initial begin
+    $display("A B Cin | Sum Cout");
+    $monitor("%b %b  %b  |  %b   %b", A, B, Cin, Sum, Cout);
+    A=0; B=0; Cin=0; #10;
+    A=1; B=0; Cin=1; #10;
+    A=1; B=1; Cin=0; #10;
+    A=1; B=1; Cin=1; #10;
+    $finish;
+  end
+endmodule
+```
 
 ---
 
+## 🖼️ Simulation Results
 
+### 🔸 RTL Schematic
+
+![RTL Schematic](FA_RTL_SCh2.PNG)
+
+### 🔸 Simulation Waveform
+
+![Waveform](Waveform.PNG)
+
+### 🔸 Output Capture
+
+![Output Capture](Capture.PNG)
+
+---
+
+## 🧰 Tools Used
+
+* **Simulator:** eSim / ModelSim / Vivado
+* **Language:** Verilog HDL
+* **Editor:** VS Code / KiCad / NgSpice
+
+---
+
+## 🏁 Conclusion
+
+This project demonstrates the design and verification of a **1-bit Full Adder** using different Verilog modeling styles. The correctness is verified through simulation waveforms, confirming that the output matches the expected truth table.
+
+---
+
+**📌 Author:** S Roy
+**🎓 Domain:** Digital Design | VLSI | HDL Simulation
+**🔗 Repository:** `Verilog_Full_Adder`
